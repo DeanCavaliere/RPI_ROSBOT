@@ -7,6 +7,7 @@ def controller():
     #you can call it whatever you like
     gamepad = InputDevice('/dev/input/event7')
 
+    #Here are some user defined buttons | These were found manually
     xBtn = 304
     oBtn = 305
     sqBtn = 308
@@ -23,51 +24,51 @@ def controller():
     rAlgUD = ecodes.ABS_RY
 
     #prints out device info at start
-    print(gamepad)
+    #print(gamepad)
 
     #loop and filter by event code and print the mapped label
     for event in gamepad.read_loop():
         if event.type == evdev.ecodes.EV_KEY:
             if event.value == 1:
                 if event.code == xBtn:
-                    print("X")
+                    return "X"
                 elif event.code == oBtn:
-                    print("O")
+                    return("O")
                 elif event.code == sqBtn:
-                    print("Square")
+                    return("Square")
                 elif event.code == triBtn:
-                    print("Triangle")
+                    return("Triangle")
                 elif event.code == 314:
-                    print("Share")
+                    return("Share")
                 elif event.code == 315:
-                    print("Options")
+                    return("Options")
                 elif event.code == rTrT:
-                    print("Right Top BTN ")
+                    return("Right Top BTN ")
                 elif event.code == rTrB:
-                    print("Right Bottom BTN ")
+                    return("Right Bottom BTN ")
                 elif event.code == lTrT:
-                    print("Left Top BTN ")
+                    return("Left Top BTN ")
                 elif event.code == lTrB:
-                    print("Left Bottom BTN ")
+                    return("Left Bottom BTN ")
                 elif event.code == 316:
-                    print("PS BTN")
+                    return("PS BTN")
                 
         if event.type == evdev.ecodes.EV_ABS:
             if event.value < 110:
                 if event.code == lAlgUD:
-                    print('Left Analog Up '+str(event.value))
+                    return('Left Analog Up ')#+str(event.value))
                 elif event.code == lAlgLR:
-                    print("Left Analog Left "+str(event.value))
+                    return("Left Analog Left ")#+str(event.value))
                 elif event.code == rAlgUD:
-                    print("Right Analog Up "+str(event.value))
+                    return("Right Analog Up ")#+str(event.value))
                 elif event.code == rAlgLR:
-                    print("Right Analog Left "+str(event.value))
+                    return("Right Analog Left ")#+str(event.value))
             if event.value > 146:
                 if event.code == lAlgUD:
-                    print("Left Analog Down "+ str(event.value))
+                    return("Left Analog Down ")#+ str(event.value))
                 elif event.code == lAlgLR:
-                    print("Left Analog Right "+str(event.value))
+                    return("Left Analog Right ")#+str(event.value))
                 elif event.code == rAlgUD:
-                    print("Right Analog Down "+str(event.value))
+                    return("Right Analog Down ")#+str(event.value))
                 elif event.code == rAlgLR:
-                    print("Right Analog Right "+str(event.value))
+                    return("Right Analog Right ")#+str(event.value))
