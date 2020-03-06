@@ -5,6 +5,14 @@ def controller():
 
     #creates object 'gamepad' to store the data
     #you can call it whatever you like
+    #To see the list of events
+    #Connect controller
+    #Run: python -m evdev.evtest
+    #Look to see what event number the controller is
+    #Mine reads '.../input/event7/  Sony Entertainment Wireless Controller...'
+    #Type '0' and hit enter. You should see tons of data relating to button presses
+
+    #The event number should be typed in below., again, mine was event7
     gamepad = InputDevice('/dev/input/event7')
 
     #Here are some user defined buttons | These were found manually
