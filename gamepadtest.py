@@ -82,7 +82,7 @@ for event in gamepad.read_loop():
                 data = ("Right Top BTN")
                 mqttPublish(data)
             elif event.code == rTrB:
-                data = ("Right Bottom BTN")
+                data = ("Accel On")
                 mqttPublish(data)
             elif event.code == lTrT:
                 data = ("Left Top BTN")
@@ -93,9 +93,13 @@ for event in gamepad.read_loop():
             elif event.code == 316:
                 data = ("PS BTN")
                 mqttPublish(data)
+        if event.value == 0:
+            if event.code == rTrB:
+                data = ("Accel Off")
+                mqttPublish(data)
 
     if event.type == evdev.ecodes.EV_ABS:
-        if event.value < 110:
+        if event.value < 10:
             if event.code == lAlgUD:
                 data = ('Left Analog Up')  # +str(event.value))
                 mqttPublish(data)
@@ -108,7 +112,7 @@ for event in gamepad.read_loop():
             elif event.code == rAlgLR:
                 data = ("Right Analog Left")  # +str(event.value))
                 mqttPublish(data)
-        if event.value > 146:
+        if event.value > 245:
             if event.code == lAlgUD:
                 data = ("Left Analog Down")  # + str(event.value))
                 mqttPublish(data)
