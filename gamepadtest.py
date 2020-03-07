@@ -99,7 +99,7 @@ for event in gamepad.read_loop():
                 mqttPublish(data)
 
     if event.type == evdev.ecodes.EV_ABS:
-        if event.value < 10:
+        if event.value < 2:
             if event.code == lAlgUD:
                 data = ('Left Analog Up')  # +str(event.value))
                 mqttPublish(data)
@@ -112,7 +112,7 @@ for event in gamepad.read_loop():
             elif event.code == rAlgLR:
                 data = ("Right Analog Left")  # +str(event.value))
                 mqttPublish(data)
-        if event.value > 245:
+        if event.value > 253:
             if event.code == lAlgUD:
                 data = ("Left Analog Down")  # + str(event.value))
                 mqttPublish(data)
