@@ -1,56 +1,117 @@
-import gamepadtest as game
-import paho.mqtt.client as paho
-from time import sleep
+#!/usr/bin/env python
+import rospy
+from std_msgs.msg import String
+
+import evdev
+from evdev import InputDevice, categorize, ecodes
+
+# creates object 'gamepad' to store the data
+# you can call it whatever you like
+# To see the list of events
+# Connect controller
+# Run: python -m evdev.evtest
+# Look to see what event number the controller is
+# Mine reads '.../input/event7/  Sony Entertainment Wireless Controller...'
+# Type '0' and hit enter. You should see tons of data relating to button presses
+
+# The event number should be typed in below., again, mine was event7
+gamepad = InputDevice('/dev/input/event7')
+
+# Here are some user defined buttons | These were found manually
+xBtn = 304
+oBtn = 305
+sqBtn = 308
+triBtn = 307
+
+lTrB = 312
+lTrT = 310
+rTrB = 313
+rTrT = 311
+
+lAlgLR = ecodes.ABS_X
+lAlgUD = ecodes.ABS_Y
+rAlgLR = ecodes.ABS_RX
+rAlgUD = ecodes.ABS_RY
+
+# MQTT Globals
 topic = "controller"
-rc = 0
 
-# Define event callbacks
-def on_connect(mosq, obj, rc):
-    print("rc: " + str(rc))
+pub = rospy.Publisher(topic, String, queue_size = 10)
 
-def on_message(mosq, obj, msg):
-    print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+def mqttPublish(data):
+    print("Published: " + str(data))
+    pub.publish(topic, String(data))
 
-def on_publish(mosq, obj, mid):
-    print("Publish: ")
 
-def on_subscribe(mosq, obj, mid, granted_qos):
-    print("Subscribed: " + str(mid) + " " + str(granted_qos))
+# prints out device info at start
+print(gamepad)
 
-def on_log(mosq, obj, level, string):
-    print(string)
+# loop and filter by event code and print the mapped label
+for event in gamepad.read_loop():
+    if event.type == evdev.ecodes.EV_KEY:
+        if event.value == 1:
+            if event.code == xBtn:
+                data = "X"
+                mqttPublish(data)
+            elif event.code == oBtn:
+                data = ("O")
+                mqttPublish(data)
+            elif event.code == sqBtn:
+                data = ("Square")
+                mqttPublish(data)
+            elif event.code == triBtn:
+                data = ("Triangle")
+                mqttPublish(data)
+            elif event.code == 314:
+                data = ("Share")
+                mqttPublish(data)
+            elif event.code == 315:
+                data = ("Options")
+                mqttPublish(data)
+            elif event.code == rTrT:
+                data = ("Right Top BTN")
+                mqttPublish(data)
+            elif event.code == rTrB:
+                data = ("Accel On")
+                mqttPublish(data)
+            elif event.code == lTrT:
+                data = ("Left Top BTN")
+                mqttPublish(data)
+            elif event.code == lTrB:
+                data = ("Left Bottom BTN")
+                mqttPublish(data)
+            elif event.code == 316:
+                data = ("PS BTN")
+                mqttPublish(data)
+        if event.value == 0:
+            if event.code == rTrB:
+                data = ("Accel Off")
+                mqttPublish(data)
 
-mqttc = paho.Client()
-# Assign event callbacks
-mqttc.on_message = on_message
-mqttc.on_connect = on_connect
-mqttc.on_publish = on_publish
-mqttc.on_subscribe = on_subscribe
-
-# Uncomment to enable debug messages
-#mqttc.on_log = on_log
-
-# Parse CLOUDMQTT_URL (or fallback to localhost)
-#url_str = os.environ.get('CLOUDMQTT_URL', 'm12.cloudmqtt.com:19757')
-#url = urlparse.urlparse(url_str)
-url='tailor.cloudmqtt.com:10608'
-
-# Connect
-mqttc.username_pw_set( "gujunebq", "7jKRFQxKHQcO")
-#mqttc.username_pw_set(url.username, url.password)
-mqttc.connect("tailor.cloudmqtt.com", 10608)
-
-# Start subscribe, with QoS level 0
-mqttc.subscribe(topic, 0)
-
-# Publish a message
-mqttc.publish(topic, "Connected")
-
-# Continue the network loop, exit when an error occurs
-while rc == 0:
-        rc = mqttc.loop()
-        controllerData = game.controller()
-        mqttc.publish(topic, str(controllerData))
-        sleep(0.5)
-print("rc: " + str(rc))
-
+    if event.type == evdev.ecodes.EV_ABS:
+        if event.value < 2:
+            if event.code == lAlgUD:
+                data = ('Left Analog Up')  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == lAlgLR:
+                data = ("Left Analog Left")  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == rAlgUD:
+                data = ("Right Analog Up")  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == rAlgLR:
+                data = ("Right Analog Left")  # +str(event.value))
+                mqttPublish(data)
+        if event.value > 253:
+            if event.code == lAlgUD:
+                data = ("Left Analog Down")  # + str(event.value))
+                mqttPublish(data)
+            elif event.code == lAlgLR:
+                data = ("Left Analog Right")  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == rAlgUD:
+                data = ("Right Analog Down")  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == rAlgLR:
+                data = ("Right Analog Right")  # +str(event.value))
+                mqttPublish(data)
