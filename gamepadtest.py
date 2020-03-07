@@ -32,15 +32,15 @@ lAlgUD = ecodes.ABS_Y
 rAlgLR = ecodes.ABS_RX
 rAlgUD = ecodes.ABS_RY
 
-#MQTT Globals
+# MQTT Globals
 topic = "controller"
 
-url='tailor.cloudmqtt.com:10608'
+url = 'tailor.cloudmqtt.com:10608'
 
 mqttc = paho.Client()
 # Connect
-mqttc.username_pw_set( "gujunebq", "7jKRFQxKHQcO")
-#mqttc.username_pw_set(url.username, url.password)
+mqttc.username_pw_set("gujunebq", "7jKRFQxKHQcO")
+# mqttc.username_pw_set(url.username, url.password)
 mqttc.connect("tailor.cloudmqtt.com", 10608)
 
 # Start subscribe, with QoS level 0
@@ -51,80 +51,79 @@ mqttc.publish(topic, "Connected")
 
 
 def mqttPublish(data):
+    print("Published: " + str(data))
     mqttc.publish(topic, str(data))
+
 
 # prints out device info at start
 print(gamepad)
 
 # loop and filter by event code and print the mapped label
 for event in gamepad.read_loop():
-    try:
-        if event.type == evdev.ecodes.EV_KEY:
-            if event.value == 1:
-                if event.code == xBtn:
-                    data =  "X"
-                    mqttPublish(data)
-                elif event.code == oBtn:
-                    data = ("O")
-                    mqttPublish(data)
-                elif event.code == sqBtn:
-                    data = ("Square")
-                    mqttPublish(data)
-                elif event.code == triBtn:
-                    data = ("Triangle")
-                    mqttPublish(data)
-                elif event.code == 314:
-                    data = ("Share")
-                    mqttPublish(data)
-                elif event.code == 315:
-                    data = ("Options")
-                    mqttPublish(data)
-                elif event.code == rTrT:
-                    data = ("Right Top BTN")
-                    mqttPublish(data)
-                elif event.code == rTrB:
-                    data = ("Accel On")
-                    mqttPublish(data)
-                elif event.code == lTrT:
-                    data = ("Left Top BTN")
-                    mqttPublish(data)
-                elif event.code == lTrB:
-                    data = ("Left Bottom BTN")
-                    mqttPublish(data)
-                elif event.code == 316:
-                    data = ("PS BTN")
-                    mqttPublish(data)
-            if event.value == 0:
-                if event.code == rTrB:
-                    data = ("Accel Off")
-                    mqttPublish(data)
+    if event.type == evdev.ecodes.EV_KEY:
+        if event.value == 1:
+            if event.code == xBtn:
+                data = "X"
+                mqttPublish(data)
+            elif event.code == oBtn:
+                data = ("O")
+                mqttPublish(data)
+            elif event.code == sqBtn:
+                data = ("Square")
+                mqttPublish(data)
+            elif event.code == triBtn:
+                data = ("Triangle")
+                mqttPublish(data)
+            elif event.code == 314:
+                data = ("Share")
+                mqttPublish(data)
+            elif event.code == 315:
+                data = ("Options")
+                mqttPublish(data)
+            elif event.code == rTrT:
+                data = ("Right Top BTN")
+                mqttPublish(data)
+            elif event.code == rTrB:
+                data = ("Accel On")
+                mqttPublish(data)
+            elif event.code == lTrT:
+                data = ("Left Top BTN")
+                mqttPublish(data)
+            elif event.code == lTrB:
+                data = ("Left Bottom BTN")
+                mqttPublish(data)
+            elif event.code == 316:
+                data = ("PS BTN")
+                mqttPublish(data)
+        if event.value == 0:
+            if event.code == rTrB:
+                data = ("Accel Off")
+                mqttPublish(data)
 
-        if event.type == evdev.ecodes.EV_ABS:
-            if event.value < 2:
-                if event.code == lAlgUD:
-                    data = ('Left Analog Up')  # +str(event.value))
-                    mqttPublish(data)
-                elif event.code == lAlgLR:
-                    data = ("Left Analog Left")  # +str(event.value))
-                    mqttPublish(data)
-                elif event.code == rAlgUD:
-                    data = ("Right Analog Up")  # +str(event.value))
-                    mqttPublish(data)
-                elif event.code == rAlgLR:
-                    data = ("Right Analog Left")  # +str(event.value))
-                    mqttPublish(data)
-            if event.value > 253:
-                if event.code == lAlgUD:
-                    data = ("Left Analog Down")  # + str(event.value))
-                    mqttPublish(data)
-                elif event.code == lAlgLR:
-                    data = ("Left Analog Right")  # +str(event.value))
-                    mqttPublish(data)
-                elif event.code == rAlgUD:
-                    data = ("Right Analog Down")  # +str(event.value))
-                    mqttPublish(data)
-                elif event.code == rAlgLR:
-                    data = ("Right Analog Right")  # +str(event.value))
-                    mqttPublish(data)
-    except KeyboardInterrupt:
-        sys.exit()
+    if event.type == evdev.ecodes.EV_ABS:
+        if event.value < 2:
+            if event.code == lAlgUD:
+                data = ('Left Analog Up')  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == lAlgLR:
+                data = ("Left Analog Left")  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == rAlgUD:
+                data = ("Right Analog Up")  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == rAlgLR:
+                data = ("Right Analog Left")  # +str(event.value))
+                mqttPublish(data)
+        if event.value > 253:
+            if event.code == lAlgUD:
+                data = ("Left Analog Down")  # + str(event.value))
+                mqttPublish(data)
+            elif event.code == lAlgLR:
+                data = ("Left Analog Right")  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == rAlgUD:
+                data = ("Right Analog Down")  # +str(event.value))
+                mqttPublish(data)
+            elif event.code == rAlgLR:
+                data = ("Right Analog Right")  # +str(event.value))
+                mqttPublish(data)
