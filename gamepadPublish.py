@@ -12,7 +12,7 @@ def on_message(mosq, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
 
 def on_publish(mosq, obj, mid):
-    print("mid: " + accelerometer_data)
+    print("Publish: ")
 
 def on_subscribe(mosq, obj, mid, granted_qos):
     print("Subscribed: " + str(mid) + " " + str(granted_qos))
