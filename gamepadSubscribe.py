@@ -11,7 +11,7 @@ def callback(data):
     s=ServoNT(channel=1, freq=97.9)
    #s.pulse(0.1)
 #    print(data.data)
-    if data == "X":
+    if data == 0:
        print(data.data)
        s.pulse(float(data.data))
 #    s.pulse(0.1)

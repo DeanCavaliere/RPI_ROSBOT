@@ -18,6 +18,7 @@ def callback(data):
     #twist.linear.x = data.axes[4] #Right Vertical Stick
     #twist.angular.z = data.axes[3] #Right Horizontal Stick
     pub.publish(twist)
+    print(str(Twist))
 
 # Intializes everything
 def start():
