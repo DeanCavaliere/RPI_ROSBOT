@@ -3,7 +3,9 @@ import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
 from std_msgs.msg import Float32
-#http://wiki.ros.org/mallasrikanth/joystick%20control
+
+
+# http://wiki.ros.org/mallasrikanth/joystick%20control
 #
 # This ROS Node converts Joystick inputs from the joy node
 # into commands for turtlesim or any other robot
@@ -14,46 +16,48 @@ from std_msgs.msg import Float32
 # axis 0 aka left stick horizonal controls angular speed
 def callback(data):
     twist = Twist()
-    twist.linear.x = data.axes[1] #Left Veritcal Stick
-    twist.angular.z = data.axes[0] #Left Horizontal Stick
-    #twist.linear.x = data.axes[4] #Right Vertical Stick
-    #twist.angular.z = data.axes[3] #Right Horizontal Stick
+    twist.linear.x = data.axes[1]  # Left Veritcal Stick
+    twist.angular.z = data.axes[0]  # Left Horizontal Stick
+    # twist.linear.x = data.axes[4] #Right Vertical Stick
+    # twist.angular.z = data.axes[3] #Right Horizontal Stick
     pub.publish(twist)
-    #print(str(Twist))
+    # print(str(Twist))
     # FORWARD/BACK =  1/-1.
     if Float32(twist.linear.x) < (0):
+        if Float32(twist.linear.x) < (-0.99):
+            hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
         hold1 = ('Backwards   ' + str(Float32(twist.linear.x)))
-    elif Float32(twist.linear.x) > (0.99):
-        hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '           ')
-    elif  Float32(twist.linear.x) < (-0.99):
-        hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
     elif twist.linear.x > (0):
+        if Float32(twist.linear.x) > (0.99):
+            hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '           ')
         hold1 = ('Forwards    ' + str(Float32(twist.linear.x)))
     else:
         hold1 = ('Stop        ' + str(Float32(twist.linear.x)) + '           ')
     # LEFT/RIGHT = 1/-1
     if Float32(twist.angular.z) < (0):
+        if Float32(twist.angular.z) < (-0.99):
+            hold2 = ('Right       ' + str(Float32(twist.angular.z)) + '           ')
         hold2 = ('Right       ' + str(Float32(twist.angular.z)))
-    elif Float32(twist.angular.z) > (0.99):
-        hold2 = ('Left        ' + str(Float32(twist.angular.z)) + '           ')
-    elif  Float32(twist.angular.z) < (-0.99):
-        hold2 = ('Right       ' + str(Float32(twist.angular.z)) + '           ')
     elif twist.angular.z > (0):
+        if Float32(twist.angular.z) > (0.99):
+            hold2 = ('Left        ' + str(Float32(twist.angular.z)) + '           ')
         hold2 = ('Left        ' + str(Float32(twist.angular.z)))
     else:
         hold2 = ('Straight    ' + str(Float32(twist.angular.z)) + '           ')
-    print(hold1 + '\t' +hold2)
+    print(hold1 + '\t' + hold2)
+
 
 # Intializes everything
 def start():
     # publishing to "turtle1/cmd_vel" to control turtle1
     global pub
-    pub = rospy.Publisher('controller', Twist, queue_size=10) #queue_size
+    pub = rospy.Publisher('controller', Twist, queue_size=10)  # queue_size
     # subscribed to joystick inputs on topic "joy"
     rospy.Subscriber("joy", Joy, callback)
     # starts the node
     rospy.init_node('joy2robot')
     rospy.spin()
+
 
 if __name__ == '__main__':
     start()
