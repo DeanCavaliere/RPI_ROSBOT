@@ -2,7 +2,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 
 
 # http://wiki.ros.org/mallasrikanth/joystick%20control
@@ -23,19 +23,19 @@ def callback(data):
     pub.publish(twist)
     # print(str(Twist))
     # FORWARD/BACK =  1/-1.
-    if twist.linear.x > (0.500):
-        hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '           ')
-    elif Float32(twist.linear.x) < Float32(-0.500):
-        hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
+    if Float64(twist.linear.x) > Float64(0.500):
+        hold1 = ('Forwards    ' + str(Float64(twist.linear.x)) + '           ')
+    elif Float64(twist.linear.x) < Float64(-0.500):
+        hold1 = ('Backwards   ' + str(Float64(twist.linear.x)) + '           ')
     else:
-        hold1 = ('Stop        ' + str(Float32(twist.linear.x)) + '           ')
+        hold1 = ('Stop        ' + str(Float64(twist.linear.x)) + '           ')
     # LEFT/RIGHT = 1/-1
-    if twist.angular.z > (0.500):
-        hold2 = ('Left        ' + str(Float32(twist.angular.z)))
-    elif Float32(twist.angular.z) < Float32(-0.500):
-        hold2 = ('Right       ' + str(Float32(twist.angular.z)))
+    if Float64(twist.angular.z) > Float64(0.500):
+        hold2 = ('Left        ' + str(Float64(twist.angular.z)))
+    elif Float64(twist.angular.z) < Float64(-0.500):
+        hold2 = ('Right       ' + str(Float64(twist.angular.z)))
     else:
-        hold2 = ('Straight    ' + str(Float32(twist.angular.z)))
+        hold2 = ('Straight    ' + str(Float64(twist.angular.z)))
     print(hold1 + '\t' + hold2)
 
 
