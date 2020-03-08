@@ -25,14 +25,14 @@ def callback(data):
     # FORWARD/BACK =  1/-1.
     if twist.linear.x > (0):
         if Float32(twist.linear.x) > (0.99):
-            hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '           ')
+            hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '                    ')
         hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '           ')
     elif Float32(twist.linear.x) < Float32(-0.01):
         if Float32(twist.linear.x) < Float32(-0.99):
-            hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
+            hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '                    ')
         hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
     else:
-        hold1 = ('Stop        ' + str(Float32(twist.linear.x)) + '           ')
+        hold1 = ('Stop        ' + str(Float32(twist.linear.x)) + '                    ')
     # LEFT/RIGHT = 1/-1
     if twist.angular.z > (0):
         if Float32(twist.angular.z) > (0.99):
