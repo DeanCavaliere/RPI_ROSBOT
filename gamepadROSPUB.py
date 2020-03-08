@@ -23,7 +23,7 @@ def callback(data):
     pub.publish(twist)
     # print(str(Twist))
     # FORWARD/BACK =  1/-1.
-    if Float32(twist.linear.x) < (0):
+    if Float32(twist.linear.x) < (-0.01):
         if Float32(twist.linear.x) < (-0.99):
             hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
         hold1 = ('Backwards   ' + str(Float32(twist.linear.x)))
@@ -34,7 +34,7 @@ def callback(data):
     else:
         hold1 = ('Stop        ' + str(Float32(twist.linear.x)) + '           ')
     # LEFT/RIGHT = 1/-1
-    if Float32(twist.angular.z) < (0):
+    if Float32(twist.angular.z) < (-0.01):
         if Float32(twist.angular.z) < (-0.99):
             hold2 = ('Right       ' + str(Float32(twist.angular.z)) + '           ')
         hold2 = ('Right       ' + str(Float32(twist.angular.z)))
