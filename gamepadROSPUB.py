@@ -23,9 +23,9 @@ def callback(data):
     # FORWARD/BACK =  1/-1.
     if Float32(twist.linear.x) < (0):
         hold1 = ('Backwards   ' + str(Float32(twist.linear.x)))
-    elif Float32(twist.linear.x) == (1.0):
+    elif Float32(twist.linear.x) > (0.99):
         hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '           ')
-    elif  Float32(twist.linear.x) == (-1.0):
+    elif  Float32(twist.linear.x) < (-0.99):
         hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
     elif twist.linear.x > (0):
         hold1 = ('Forwards    ' + str(Float32(twist.linear.x)))
@@ -34,9 +34,9 @@ def callback(data):
     # LEFT/RIGHT = 1/-1
     if Float32(twist.angular.z) < (0):
         hold2 = ('Right       ' + str(Float32(twist.angular.z)))
-    elif Float32(twist.angular.z) == (1.0):
+    elif Float32(twist.angular.z) > (0.99):
         hold1 = ('Left        ' + str(Float32(twist.angular.z)) + '           ')
-    elif  Float32(twist.angular.z) == (-1.0):
+    elif  Float32(twist.angular.z) < (-0.99):
         hold1 = ('Right       ' + str(Float32(twist.angular.z)) + '           ')
     elif twist.angular.z > (0):
         hold2 = ('Left        ' + str(Float32(twist.angular.z)))
