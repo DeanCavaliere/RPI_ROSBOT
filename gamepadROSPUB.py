@@ -27,8 +27,8 @@ def callback(data):
         if Float32(twist.linear.x) > (0.9998):
             hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '                    ')
         hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '           ')
-    elif Float32(twist.linear.x) < Float32(-0.500):
-        if Float32(twist.linear.x) < Float32(-0.9998):
+    elif Float32(twist.linear.x) < (-0.500):
+        if Float32(twist.linear.x) < (-0.9998):
             hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '                    ')
         hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
     else:
@@ -38,8 +38,8 @@ def callback(data):
         if Float32(twist.angular.z) > (0.99998):
             hold2 = ('Left        ' + str(Float32(twist.angular.z)))
         hold2 = ('Left        ' + str(Float32(twist.angular.z)))
-    elif Float32(twist.angular.z) < Float32(-0.500):
-        if Float32(twist.angular.z) < Float32(-0.9998):
+    elif Float32(twist.angular.z) < (-0.500):
+        if Float32(twist.angular.z) < (-0.9998):
             hold2 = ('Right       ' + str(Float32(twist.angular.z)))
         hold2 = ('Right       ' + str(Float32(twist.angular.z)))
     else:
