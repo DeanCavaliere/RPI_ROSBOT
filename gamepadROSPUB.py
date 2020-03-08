@@ -2,6 +2,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
+from std_msgs.msg import Float32
 #http://wiki.ros.org/mallasrikanth/joystick%20control
 #
 # This ROS Node converts Joystick inputs from the joy node
@@ -13,15 +14,26 @@ from sensor_msgs.msg import Joy
 # axis 0 aka left stick horizonal controls angular speed
 def callback(data):
     twist = Twist()
-    twist.linear.x = data.axes[7]
-    twist.angular.z = data.axes[6]
-
     twist.linear.x = data.axes[1] #Left Veritcal Stick
     twist.angular.z = data.axes[0] #Left Horizontal Stick
     #twist.linear.x = data.axes[4] #Right Vertical Stick
     #twist.angular.z = data.axes[3] #Right Horizontal Stick
     pub.publish(twist)
-    print(str(Twist))
+    #print(str(Twist))
+    # FORWARD/BACK =  1/-1.
+    if Float32(twist.linear.x) < (-0.2):
+        print('Backwards: '+ Float32(twist.linear.x))
+    elif twist.linear.x > (0.2):
+        print('Forwards: ' + Float32(twist.linear.x))
+    else:
+        print('Stop: ' + Float32(twist.linear.x))
+    # LEFT/RIGHT = 1/-1
+    if Float32(twist.angular.z) < (-0.2):
+        print('Right: '+ Float32(twist.angular.z))
+    elif twist.linear.x > (0.2):
+        print('Left: ' + Float32(twist.angular.z))
+    else:
+        print('Straight: ' + Float32(twist.angular.z))
 
 # Intializes everything
 def start():
