@@ -22,24 +22,24 @@ def callback(data):
     #print(str(Twist))
     # FORWARD/BACK =  1/-1.
     if Float32(twist.linear.x) < (-0.2):
-        print('Backwards: '+ Float32(twist.linear.x))
+        print('Backwards: '+ str(Float32(twist.linear.x)))
     elif twist.linear.x > (0.2):
-        print('Forwards: ' + Float32(twist.linear.x))
+        print('Forwards: ' + str(Float32(twist.linear.x)))
     else:
-        print('Stop: ' + Float32(twist.linear.x))
+        print('Stop: ' + str(Float32(twist.linear.x)))
     # LEFT/RIGHT = 1/-1
     if Float32(twist.angular.z) < (-0.2):
-        print('Right: '+ Float32(twist.angular.z))
+        print('Right: '+ str(Float32(twist.angular.z)))
     elif twist.linear.x > (0.2):
-        print('Left: ' + Float32(twist.angular.z))
+        print('Left: ' + str(Float32(twist.angular.z)))
     else:
-        print('Straight: ' + Float32(twist.angular.z))
+        print('Straight: ' + str(Float32(twist.angular.z)))
 
 # Intializes everything
 def start():
     # publishing to "turtle1/cmd_vel" to control turtle1
     global pub
-    pub = rospy.Publisher('controller', Twist)
+    pub = rospy.Publisher('controller', Twist) #queue_size
     # subscribed to joystick inputs on topic "joy"
     rospy.Subscriber("joy", Joy, callback)
     # starts the node
