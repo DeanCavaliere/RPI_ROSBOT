@@ -21,16 +21,16 @@ def callback(data):
     pub.publish(twist)
     #print(str(Twist))
     # FORWARD/BACK =  1/-1.
-    if Float32(twist.linear.x) < (-0.2):
+    if Float32(twist.linear.x) < (0):
         hold1 = ('Backwards   ' + str(Float32(twist.linear.x)))
-    elif twist.linear.x > (0.2):
+    elif twist.linear.x > (0):
         hold1 = ('Forwards    ' + str(Float32(twist.linear.x)))
     else:
         hold1 = ('Stop        ' + str(Float32(twist.linear.x)) + '           ')
     # LEFT/RIGHT = 1/-1
-    if Float32(twist.angular.z) < (-0.2):
+    if Float32(twist.angular.z) < (-0):
         hold2 = ('Right       ' + str(Float32(twist.angular.z)))
-    elif twist.linear.x > (0.2):
+    elif twist.linear.x > (0):
         hold2 = ('Left        ' + str(Float32(twist.angular.z)))
     else:
         hold2 = ('Straight    ' + str(Float32(twist.angular.z)) + '           ')
