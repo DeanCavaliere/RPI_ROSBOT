@@ -22,18 +22,19 @@ def callback(data):
     #print(str(Twist))
     # FORWARD/BACK =  1/-1.
     if Float32(twist.linear.x) < (-0.2):
-        print('Backwards   '+ str(Float32(twist.linear.x)))
+        hold1 = ('Backwards   '+ str(Float32(twist.linear.x)))
     elif twist.linear.x > (0.2):
-        print('Forwards    ' + str(Float32(twist.linear.x)))
+        hold1 = ('Forwards    ' + str(Float32(twist.linear.x)))
     else:
-        print('Stop        ' + str(Float32(twist.linear.x)))
+        hold1 = ('Stop        ' + str(Float32(twist.linear.x)))
     # LEFT/RIGHT = 1/-1
     if Float32(twist.angular.z) < (-0.2):
-        print('Right       '+ str(Float32(twist.angular.z)))
+        hold2 = ('Right       '+ str(Float32(twist.angular.z)))
     elif twist.linear.x > (0.2):
-        print('Left        ' + str(Float32(twist.angular.z)))
+        hold2 = ('Left        ' + str(Float32(twist.angular.z)))
     else:
-        print('Straight    ' + str(Float32(twist.angular.z)))
+        hold2 = ('Straight    ' + str(Float32(twist.angular.z)))
+    print(hold1 + '     ' +hold2)
 
 # Intializes everything
 def start():
