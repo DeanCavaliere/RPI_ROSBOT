@@ -23,25 +23,25 @@ def callback(data):
     pub.publish(twist)
     # print(str(Twist))
     # FORWARD/BACK =  1/-1.
-    if Float32(twist.linear.x) < Float32(-0.01):
-        if Float32(twist.linear.x) < Float32(-0.99):
-            hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
-        hold1 = ('Backwards   ' + str(Float32(twist.linear.x)))
-    elif twist.linear.x > (0):
+    if twist.linear.x > (0):
         if Float32(twist.linear.x) > (0.99):
             hold1 = ('Forwards    ' + str(Float32(twist.linear.x)) + '           ')
         hold1 = ('Forwards    ' + str(Float32(twist.linear.x)))
+    elif Float32(twist.linear.x) < Float32(-0.01):
+        if Float32(twist.linear.x) < Float32(-0.99):
+            hold1 = ('Backwards   ' + str(Float32(twist.linear.x)) + '           ')
+        hold1 = ('Backwards   ' + str(Float32(twist.linear.x)))
     else:
         hold1 = ('Stop        ' + str(Float32(twist.linear.x)) + '           ')
     # LEFT/RIGHT = 1/-1
-    if Float32(twist.angular.z) < Float32(-0.01):
-        if Float32(twist.angular.z) < Float32(-0.99):
-            hold2 = ('Right       ' + str(Float32(twist.angular.z)) + '           ')
-        hold2 = ('Right       ' + str(Float32(twist.angular.z)))
-    elif twist.angular.z > (0):
+    if twist.angular.z > (0):
         if Float32(twist.angular.z) > (0.99):
             hold2 = ('Left        ' + str(Float32(twist.angular.z)) + '           ')
         hold2 = ('Left        ' + str(Float32(twist.angular.z)))
+    elif Float32(twist.angular.z) < Float32(-0.01):
+        if Float32(twist.angular.z) < Float32(-0.99):
+            hold2 = ('Right       ' + str(Float32(twist.angular.z)) + '           ')
+        hold2 = ('Right       ' + str(Float32(twist.angular.z)))
     else:
         hold2 = ('Straight    ' + str(Float32(twist.angular.z)) + '           ')
     print(hold1 + '\t' + hold2)
