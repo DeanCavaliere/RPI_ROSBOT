@@ -5,11 +5,11 @@ from geometry_msgs.msg import Twist
 
 def callback(data):
     #rospy.loginfo(rospy.get_caller_id() + 'I heard %s', data.data)
-    dummy = int(data.linear.x)
-    dummy2 = int(data.angular.z)
-    print('linear x is: ' + dummy)
-    print('Angular z is ' + dummy2)
-
+    #dummy = int(data.linear.x)
+    #dummy2 = int(data.angular.z)
+    #print('linear x is: ' + dummy)
+    #print('Angular z is ' + dummy2)
+    print(data.data)
 
 def listener():
     # In ROS, nodes are uniquely named. If two nodes with the same
