@@ -38,7 +38,7 @@ def callback(data):
         hold1 = ('Left        ' + str(Float32(twist.angular.z)) + '           ')
     elif  Float32(twist.angular.z) == (-1.0):
         hold1 = ('Right       ' + str(Float32(twist.angular.z)) + '           ')
-    elif twist.linear.x > (0):
+    elif twist.angular.z > (0):
         hold2 = ('Left        ' + str(Float32(twist.angular.z)))
     else:
         hold2 = ('Straight    ' + str(Float32(twist.angular.z)) + '           ')
