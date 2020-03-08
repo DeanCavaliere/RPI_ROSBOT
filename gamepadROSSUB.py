@@ -1,4 +1,3 @@
-
 import rospy
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
@@ -9,10 +8,10 @@ def callback(data):
     dummy = int(data.linear.x)
     dummy2 = int(data.angular.z)
     print('linear x is: ' + dummy)
-    print('Angular z is '+dummy2)
+    print('Angular z is ' + dummy2)
+
 
 def listener():
-
     # In ROS, nodes are uniquely named. If two nodes with the same
     # name are launched, the previous one is kicked off. The
     # anonymous=True flag means that rospy will choose a unique
@@ -24,6 +23,7 @@ def listener():
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
+
 
 if __name__ == '__main__':
     listener()
