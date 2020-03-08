@@ -15,7 +15,13 @@ def callback(data):
     twist = Twist()
     twist.linear.x = data.axes[7]
     twist.angular.z = data.axes[6]
+
+    twist.linear.x = data.axes[1] #Left Veritcal Stick
+    twist.angular.z = data.axes[0] #Left Horizontal Stick
+    #twist.linear.x = data.axes[4] #Right Vertical Stick
+    #twist.angular.z = data.axes[3] #Right Horizontal Stick
     pub.publish(twist)
+    print(str(Twist))
 
 # Intializes everything
 def start():
